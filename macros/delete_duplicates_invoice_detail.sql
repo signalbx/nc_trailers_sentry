@@ -1,0 +1,121 @@
+{% macro delete_duplicates_invoice_detail(schema, table_name, temp_table_name) %}
+
+-- Create a temporary table with distinct values and row numbers
+CREATE TEMPORARY TABLE {{ temp_table_name }} AS
+SELECT 
+    _FILE,
+    _LINE,
+    _MODIFIED,
+    TYPE,
+    INVOICE_NUMBER,
+    INVOICE_DATE,
+    CUSTOMER_NAME,
+    SALESPERSON,
+    SALE_TYPE,
+    ITEM_TYPE,
+    ITEM_DESCRIPTION,
+    QTY,
+    TOTAL_PRICE,
+    TOTAL_COST,
+    TOTAL_PROFIT,
+    TOTAL_GROSS_PCT,
+    PART_SALES,
+    LABOR_SALES,
+    SUBLET_SALES,
+    FEE_SALES,
+    SUPPLIES_SALES,
+    UNIT_BASE_SALES,
+    UNIT_FACTORY_SALES,
+    UNIT_DEALER_SALES,
+    OPTION_PART_SALES,
+    OPTION_LABOR_SALES,
+    OPTION_SUBLET_SALES,
+    OPTION_FEE_SALES,
+    OPTION_WARRANTY_SALES,
+    OPTION_PRODUCT_SALES,
+    TRADE_INS,
+    FINANCE_PRODUCT_SALES,
+    _FIVETRAN_SYNCED,
+    ROW_NUMBER() OVER (PARTITION BY INVOICE_NUMBER, INVOICE_DATE, ITEM_DESCRIPTION ORDER BY _MODIFIED DESC) AS row_num
+FROM {{ source(schema, table_name) }};
+
+-- Truncate the original table
+TRUNCATE TABLE {{ source(schema, table_name) }};
+
+-- Insert the records from the temporary table back into the main table, selecting only the most recent rows
+INSERT INTO {{ source(schema, table_name) }} 
+        (_FILE,
+    _LINE,
+    _MODIFIED,
+    TYPE,
+    INVOICE_NUMBER,
+    INVOICE_DATE,
+    CUSTOMER_NAME,
+    SALESPERSON,
+    SALE_TYPE,
+    ITEM_TYPE,
+    ITEM_DESCRIPTION,
+    QTY,
+    TOTAL_PRICE,
+    TOTAL_COST,
+    TOTAL_PROFIT,
+    TOTAL_GROSS_PCT,
+    PART_SALES,
+    LABOR_SALES,
+    SUBLET_SALES,
+    FEE_SALES,
+    SUPPLIES_SALES,
+    UNIT_BASE_SALES,
+    UNIT_FACTORY_SALES,
+    UNIT_DEALER_SALES,
+    OPTION_PART_SALES,
+    OPTION_LABOR_SALES,
+    OPTION_SUBLET_SALES,
+    OPTION_FEE_SALES,
+    OPTION_WARRANTY_SALES,
+    OPTION_PRODUCT_SALES,
+    TRADE_INS,
+    FINANCE_PRODUCT_SALES,
+    _FIVETRAN_SYNCED)
+
+SELECT 
+    _FILE,
+    _LINE,
+    _MODIFIED,
+    TYPE,
+    INVOICE_NUMBER,
+    INVOICE_DATE,
+    CUSTOMER_NAME,
+    SALESPERSON,
+    SALE_TYPE,
+    ITEM_TYPE,
+    ITEM_DESCRIPTION,
+    QTY,
+    TOTAL_PRICE,
+    TOTAL_COST,
+    TOTAL_PROFIT,
+    TOTAL_GROSS_PCT,
+    PART_SALES,
+    LABOR_SALES,
+    SUBLET_SALES,
+    FEE_SALES,
+    SUPPLIES_SALES,
+    UNIT_BASE_SALES,
+    UNIT_FACTORY_SALES,
+    UNIT_DEALER_SALES,
+    OPTION_PART_SALES,
+    OPTION_LABOR_SALES,
+    OPTION_SUBLET_SALES,
+    OPTION_FEE_SALES,
+    OPTION_WARRANTY_SALES,
+    OPTION_PRODUCT_SALES,
+    TRADE_INS,
+    FINANCE_PRODUCT_SALES,
+    _FIVETRAN_SYNCED
+FROM {{ temp_table_name }}
+WHERE row_num = 1;
+
+-- Drop the temporary table
+DROP TABLE {{ temp_table_name }};
+
+{% endmacro %}

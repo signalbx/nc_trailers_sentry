@@ -1,0 +1,34 @@
+version: 2
+
+
+models:
+  - name: activity_report_prod
+    description: "Update activity_report_prod table with the latest records from activity_report"
+    config:
+      materialized: table
+    columns:
+      - name: _FILE
+        description: "Fivetran File Name"
+        tests:
+          - not_null
+      - name: CRM_USER
+        description: "Salesperson"
+        tests:
+          - not_null
+  - name: leads_prod
+    description: "Update leads_prod table with the latest records from leads"
+    config:
+      materialized: table
+    columns:
+      - name: NAME
+        description: "Contact Name"
+        tests:
+          - not_null
+      - name: CONTACT
+        description: "Contact"
+        tests:
+          - not_null
+      - name: MODIFIED
+        description: "Modified Date"
+        tests:
+          - not_null

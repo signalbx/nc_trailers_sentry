@@ -1,0 +1,17 @@
+version: 2
+
+
+models:
+  - name: time_cards_prod
+    description: "Update time_cards_prod table with the latest records from time_cards"
+    config:
+      materialized: table
+    columns:
+      - name: TECHNICIAN
+        description: "Technician"
+        tests:
+          - not_null
+      - name: TYPE
+        description: "Hour Type"
+        tests:
+          - not_null

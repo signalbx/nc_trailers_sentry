@@ -1,0 +1,95 @@
+version: 2
+
+
+models:
+  - name: customers_prod
+    description: "Update customers_prod table with the latest records from customers_stage"
+    config:
+      materialized: table
+    columns:
+      - name: CUSTOMER_NUMBER
+        description: "Customer Number"
+        tests:
+          - not_null
+
+  - name: deal_units_prod
+    description: "Update deal_units_prod table with the latest records from deal_units_stage"
+    config:
+      materialized: table
+    columns:
+      - name: ORDER_NUMBER
+        description: "Order Number"
+        tests:
+          - not_null
+      - name: STOCK_NUMBER
+        description: "Stock Number"
+        tests:
+          - not_null
+
+  - name: invoice_detail_prod
+    description: "Update invoice_detail_prod table with the latest records from invoice_detail_stage"
+    config:
+      materialized: table
+    columns:
+      - name: INVOICE_NUMBER
+        description: "Invoice Number"
+        tests:
+          - not_null
+      - name: INVOICE_DATE
+        description: "Invoice Date"
+        tests:
+          - not_null
+      - name: ITEM_DESCRIPTION
+        description: "Item Description"
+        tests:
+          - not_null
+
+  - name: invoice_summary_prod
+    description: "Update invoice_summary_prod table with the latest records from invoice_summary_stage"
+    config:
+      materialized: table
+    columns:
+      - name: INVOICE_NUMBER
+        description: "Invoice Number"
+        tests:
+          - not_null
+      - name: INVOICE_DATE
+        description: "Invoice Date"
+        tests:
+          - not_null
+
+  - name: service_jobs_prod
+    description: "Update service_jobs_prod table with the latest records from service_jobs_stage"
+    config:
+      materialized: table
+    columns:
+      - name: ORDER_NUMBER
+        description: "Order Number"
+        tests:
+          - not_null
+      - name: INVOICE_DATE
+        description: "Invoice Date"
+        tests:
+          - not_null
+      - name: JOB
+        description: "Job"
+        tests:
+          - not_null
+      - name: TECHNICIAN
+        description: "Technician"
+        tests:
+          - not_null
+
+  - name: technician_performance_prod
+    description: "Update technician_performance_prod table with the latest records from technician_performance_stage"
+    config:
+      materialized: table
+    columns:
+      - name: TECHNICIAN
+        description: "Technician"
+        tests:
+          - not_null
+      - name: DATE
+        description: "Date entered by VA"
+        tests:
+          - not_null

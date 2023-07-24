@@ -1,0 +1,17 @@
+version: 2
+
+
+models:
+  - name: phone_scores_prod
+    description: "Update phone_scores_prod table with the latest records from phone_scores"
+    config:
+      materialized: table
+    columns:
+      - name: NAME
+        description: "Name"
+        tests:
+          - not_null
+      - name: DATE
+        description: "Call Date"
+        tests:
+          - not_null

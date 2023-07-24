@@ -1,0 +1,60 @@
+version: 2
+
+sources:
+  - name: blackpurl_production
+    tables:
+      - name: customers_stage
+      - name: deal_units_stage
+      - name: invoice_detail_stage
+      - name: invoice_summary_stage
+      - name: service_jobs_stage
+      - name: technician_performance_stage
+
+  - name: blackpurl_production_blackpurl_production
+    tables:
+      - name: customers_prod
+      - name: deal_units_prod
+      - name: invoice_detail_prod
+      - name: invoice_summary_prod
+      - name: service_jobs_prod
+      - name: technician_performance_prod
+
+  - name: adp_prod
+    tables:
+      - name: time_cards
+
+  - name: blackpurl_production_adp_prod
+    tables:
+      - name: time_cards_prod
+
+  - name: dp360_prod
+    tables:
+      - name: activity_report
+      - name: leads
+  
+  - name: blackpurl_production_dp360_prod
+    tables:
+      - name: activity_report_prod
+      - name: leads_prod
+
+  - name: facebook_ads
+    tables:
+      - name: basic_all_levels
+
+  - name: google_sheets
+    tables:
+      - name: finance_apps_2
+      - name: scorecard_targets
+      - name: sales_spreadsheet
+
+  - name: phone_ninjas_prod
+    tables:
+      - name: phone_scores
+
+  - name: blackpurl_production_phone_ninjas_prod
+    tables:
+      - name: phone_scores_prod
+
+  - name: ring_central_prod
+    tables:
+      - name: numbers

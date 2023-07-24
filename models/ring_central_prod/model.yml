@@ -1,0 +1,17 @@
+version: 2
+
+
+models:
+  - name: numbers
+    description: "phone numbers table"
+    config:
+      materialized: table
+    columns:
+      - name: PHONE_NUMBER
+        description: "Phone Number"
+        tests:
+          - not_null
+      - name: EXTENSION_
+        description: "Ext"
+        tests:
+          - not_null
