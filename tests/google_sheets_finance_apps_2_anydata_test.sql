@@ -2,7 +2,7 @@
 WITH source_data AS (
     SELECT COUNT(*) AS row_count
     FROM {{ source('google_sheets', 'finance_apps_2') }}
-    WHERE to_timestamp(_FIVETRAN_SYNCED)::date = (current_date - interval '1 day')
+    WHERE to_timestamp(_FIVETRAN_SYNCED)::date = (current_date)
 )
 
 SELECT row_count
